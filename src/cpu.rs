@@ -1,3 +1,6 @@
+use std::collections::HashMap;
+use crate::opcodes;
+
 pub struct CPU {
     pub register_a: u8,
     pub status: u8,
@@ -69,7 +72,7 @@ impl CPU {
                 deref
             }
             AddressingMode::NoneAddressing => {
-                panic!("mode {:? is not supported", mode);
+                panic!("mode {:?} is not supported", mode);
             }
         }
     }
@@ -139,6 +142,14 @@ impl CPU {
                     self.lda(&AddressingMode::Absolute);
                     self.program_counter += 2;
                 }
+                0x85 => {
+                    self.sta(AddressingMode::ZeroPage);
+                    self.program_counter += 1;
+                }
+                0x95 => {
+                    self.sta(AddressingMode::ZeroPage_X);
+                    self.program_counter += 1;
+                }
             }
         }
     }
@@ -150,17 +161,23 @@ impl CPU {
             register_a: 0,
             status: 0,
             program_counter: 0,
+            register_x: 0,
+            register_y: 0,
+            memory: [0; 0xFFFF]
         }
     }
     
-    fn lda(&mut self, value: u8) {
-        self.register_a = value;
-        self.update_zero_and_negative_flags(self.register_a)
-    }
+/*
     fn tax(&mut self) {
         self.register_x = self.register_a;
         self.update_zero_and_negative_flags(self.register_x);
     }
+*/
+    fn sta(&mut self, mode: AddressingMode) {
+        let addr = self.get_operand_address(mode);
+        self.mem_write(addr, self.register_a);    
+    }
+
     fn update_zero_and_negative_flags(&mut self, result: u8) {
         if result == 0 {
             self.status = self.status | 0b0000_0010;
@@ -193,7 +210,7 @@ impl CPU {
                     
                     self.lda(param);
                     }
-                    0XAA => self.tax(),
+                    0xAA => self.tax(),
 
                     0xe8 => self.inx(),
 
@@ -244,5 +261,14 @@ mod test {
         cpu.interpret(vec![0xe8, 0xe8, 0x00]);
 
         assert_eq!(cpu.register_x, 1)
+    }
+    #[test]
+    fn test_lda_from_memory() {
+        let mut cpu = CPU::new();
+        cpu.mem_write(0x10, 0x55);
+
+        cpu.load_and_run(vec![0xa5, 0x10, 0x00]);
+
+        assert_eq!(cpu.register_a 0x55);
     }
 }

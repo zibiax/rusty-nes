@@ -1,12 +1,29 @@
 use std::collections::HashMap;
 use crate::opcodes;
 
+bitflags! {
+    pub struct CpuFlags: u8 {
+        const CARRY =               0b00000001;
+        const ZERO =                0b00000010;
+        const INTERRUPT_DISABLE =   0b00000100;
+        const DECIMAL_MODE =        0b00001000;
+        const BREAK =               0b00010000;
+        const BREAK2 =              0b00100000;
+        const OVERFLOW =            0b01000000;
+        const NEGATIV =             0b10000000;
+    }
+}
+
+const STACK: u16 =0x0100;
+const STACK_RESET: u8 =0xfd;
+
 pub struct CPU {
     pub register_a: u8,
     pub register_x: u8,
     pub register_y: u8,
     pub status: u8,
     pub program_counter: u16,
+    pub stack_pointer: u8,
     memory: [u8; 0xFFFF]
 }
 #[derive(Debug)]
@@ -190,11 +207,13 @@ impl CPU {
     pub fn new() -> Self {
         CPU {
             register_a: 0,
-            status: 0,
+            status: CpuFlags::from_bits_truncate(0b100100),
             program_counter: 0,
             register_x: 0,
             register_y: 0,
-            memory: [0; 0xFFFF]
+            memory: [0; 0xFFFF],
+            stack_pointer: STACK_RESET,
+
         }
     }
     

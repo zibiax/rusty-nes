@@ -1,6 +1,6 @@
 # rusty-nes
 
-### Installation :
+### To run it :
 
 `git clone https://github.com/zibiax/rusty-nes && cd rusty-nes && cargo run`
 

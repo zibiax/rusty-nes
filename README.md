@@ -1,4 +1,5 @@
-![GitHub Workflow Status] (https://github.com/zibiax/rusty-nes/actions/workflows/default.yml/badge.svg)
+![GitHub Workflow Status](https://github.com/zibiax/rusty-nes/actions/workflows/default.yml/badge.svg)
+
 # rusty-nes
 
 ### To run it :

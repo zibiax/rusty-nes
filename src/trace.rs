@@ -5,7 +5,6 @@ use crate::opcodes;
 use std::collections::HashMap;
 
 pub fn trace(cpu: &CPU) -> String {
-    pub fn trace(cpu: &CPU) -> String {
         let ref opscodes: HashMap<u8, &'static opcodes::OpCode> = *opcodes::OPCODES_MAP;
     
         let code = cpu.mem_read(cpu.program_counter);
@@ -129,8 +128,8 @@ pub fn trace(cpu: &CPU) -> String {
             asm_str, cpu.register_a, cpu.register_x, cpu.register_y, cpu.status, cpu.stack_pointer,
         )
         .to_ascii_uppercase()
-    }
 }
+
 
 #[cfg(test)]
 mod test {

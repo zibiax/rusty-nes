@@ -9,14 +9,14 @@ use cartridge::Rom;
 use cpu::Mem;
 use cpu::CPU;
 use rand::Rng;
-use trace::trace;
+//use trace::trace;
 
 use sdl2::event::Event;
 use sdl2::keyboard::Keycode;
 use sdl2::pixels::Color;
 use sdl2::pixels::PixelFormatEnum;
 use sdl2::EventPump;
-use std::time::Duration;
+//use std::time::Duration;
 
 #[macro_use]
 extern crate lazy_static;

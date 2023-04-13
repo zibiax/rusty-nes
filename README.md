@@ -1,4 +1,4 @@
-![Build Status](https://github.com/zibiax/rusty-nes/actions/workflows/rust.yml/badge.svg)(https://github.com/zibiax/rusty-nes/actionshttps://github.com/zibiax/rusty-nes/actions?query=workflow%3Arust)
+![Build Status](https://github.com/zibiax/rusty-nes/actions/workflows/rust.yml/badge.svg?event=push)
 
 # rusty-nes
 

@@ -9,7 +9,7 @@ use cartridge::Rom;
 use cpu::Mem;
 use cpu::CPU;
 use rand::Rng;
-use trace::trace;
+//use trace::trace;
 
 use sdl2::event::Event;
 use sdl2::keyboard::Keycode;
